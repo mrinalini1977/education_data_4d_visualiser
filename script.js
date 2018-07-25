@@ -57,10 +57,10 @@ function draw(data)
 						  .append("option")
 							.attr("value",function(d){ return d;})
 							.text(function(d) { return d;});
-		var span = body.append("span")
+		span = body.append("span")
 						.text("\u00A0");
 		
-		var span = body.append("span")
+		span = body.append("span")
 						.text("Select size Variable");
 		var sizeInput = body.append("select")
 							.attr("id","sizeSelect")
@@ -73,7 +73,7 @@ function draw(data)
 							.text(function(d) { return d;});
 		body.append("br");
 		body.append("br");
-		var span = body.append("span")
+		span = body.append("span")
 						.text("Select Y-Axis Variable");
 		var yInput = body.append("select")
 							.attr("id","ySelect")
@@ -84,10 +84,10 @@ function draw(data)
 						  .append("option")
 							.attr("value",function(d){ return d})
 							.text(function(d) { return d;});
-		var span = body.append("span")
+		span = body.append("span")
 						.text("\u00A0");
 							
-		var span = body.append("span")
+		span = body.append("span")
 						.text("Select color Variable");
 		var colorInput = body.append("select")
 							.attr("id","colorSelect")
@@ -107,7 +107,7 @@ function draw(data)
 						right : 50,
 						bottom : 50,
 						left : 50
-					 }
+					 };
 		
 		var svgHeight = 550;
 		var svgWidth = 900;
@@ -115,13 +115,13 @@ function draw(data)
 		
 	    var svg = dimple.newSvg("body",svgWidth, svgHeight);
 		
-		var frame = 1500;
+		
 	
 					
 		var button = svg.append("g")
 							.attr("id","button")
 							.classed("Pause",true)
-							.attr("transform", "translate(" +(margin.left *3.5) + "," +
+							.attr("transform", "translate(" +(margin.left *2.5) + "," +
 											(margin.top) + ")");
 					button.append("rect")
 							.attr("height",buttonHeight)
@@ -141,24 +141,20 @@ function draw(data)
 		
 		var timeVar = "Year";
 				
-		var dropdown_x = d3.select("#xSelect")
+		var dropdown_x = d3.select("#xSelect");
 		var dropdown_y = d3.select("#ySelect");
-		var dropdown_size = d3.select("#sizeSelect")
-		var dropdown_color = d3.select("#colorSelect")
+		var dropdown_size = d3.select("#sizeSelect");
+		var dropdown_color = d3.select("#colorSelect");
 		
 		var xVar = objX[dropdown_x.node().options[dropdown_x.node().selectedIndex].value];
 	    var yVar = objY[dropdown_y.node().options[dropdown_y.node().selectedIndex].value];
 		var sizeVar = objSize[dropdown_size.node().options[dropdown_size.node().selectedIndex].value];
 		var colorVar = objColor[dropdown_color.node().options[dropdown_color.node().selectedIndex].value];
 		
-		
-		//var filterColumn = "INTERVAL";
-
-		//var filterData = dimple.filterData(data, filterColumn, colorVar);
-		
+			
 		var chart = new dimple.chart(svg, data);
 		
-		chart.setBounds(margin.left + buttonWidth, margin.top + buttonHeight * 1.2, svgWidth - margin.left - margin.right - buttonWidth -100,svgHeight - margin.top - margin.bottom - buttonHeight);
+		chart.setBounds(margin.left, margin.top + buttonHeight * 1.2, svgWidth - margin.left - margin.right - buttonWidth -100,svgHeight - margin.top - margin.bottom - buttonHeight);
 			
 		var xData = data.map(function(d) { return d[xVar] ; } );
 		var yData = data.map(function(d) { return d[yVar] ; } );
@@ -173,10 +169,10 @@ function draw(data)
 		var sizeData_l = Math.min.apply(null,sizeData);
 		var sizeData_u = Math.max.apply(null, sizeData);
 	
-		var xData_r = xData_u - xData_l
-		var yData_r = yData_u - yData_l
+		var xData_r = xData_u - xData_l;
+		var yData_r = yData_u - yData_l;
 			
-		var x_axis = chart.addMeasureAxis("x", xVar)
+		var x_axis = chart.addMeasureAxis("x", xVar);
 		
 		if(xVar === "Total_Enrol")
 		{
@@ -243,20 +239,17 @@ function draw(data)
 		var story = chart.setStoryboard(timeVar, function (d) 
 		{
 	        console.log(d.frameValue);
-        });
+	    });
+		
+		story.frameDuration = 500;
 			
 		series = chart.addSeries( colorVar, dimple.plot.bubble);
 		
-		//chart.setBounds(margin.left + buttonWidth, margin.top + buttonHeight * 1.2, svgWidth - margin.left - margin.right - buttonWidth -100,svgHeight - margin.top - margin.bottom - buttonHeight);
-		//myChart.setBounds(svgWidth + margin.right, margin.top, 420, 330)
-		//var myLegend = myChart.addLegend(svgWidth + margin.right, margin.top,60, 300, "Right");
-        //myChart.legends = [];
-	
-		chart.addLegend(svgWidth-margin.right-margin.left -10 ,margin.top + 20, margin.right, svgHeight - margin.top);
+		
+		chart.addLegend(svgWidth-margin.right-margin.left -50 ,margin.top + 20, margin.right, svgHeight - margin.top);
     	chart.draw();
-		d3.selectAll("circle").style("stroke-width", 2);
-			 
-		story.frameDuration = frame;  		
+				 
+		 		
 		
 		function xChange ()
 		{
@@ -289,6 +282,8 @@ function draw(data)
 			
             		
 			chart.draw();
+			
+			updateButton("Pause");
 		}
 		
 		function yChange ()
@@ -322,6 +317,7 @@ function draw(data)
             		
 			chart.draw();
 			
+			updateButton("Pause");
 		}
 		
 		function sizeChange ()
@@ -352,6 +348,7 @@ function draw(data)
             		
 			chart.draw();
 			
+			updateButton("Pause");
 		}
 		
 		function colorChange ()
@@ -363,14 +360,27 @@ function draw(data)
 			
 			if (value == "Region")
 			{
-				series = chart.addSeries(['State', 'Region'], dimple.plot.bubble);
+				series = chart.addSeries(['State', 'a', 'Region'], dimple.plot.bubble);
 			}
 			else
 			{
 				series = chart.addSeries(value, dimple.plot.bubble);
 			}
 		
+		    var regions = dimple.getUniqueValues(data, "Region");
+			
+			regions.forEach(function (region, k) {
+            chart.assignColor(
+              region,
+              chart.defaultColors[k].fill,
+              "white", .8);
+            }, this);
+        	
+				
 			chart.draw();
+			
+			updateButton("Pause");
+		
 		}
 		
 		function onClick() 
@@ -386,12 +396,13 @@ function draw(data)
 				button.classed("Play",false);
 				updateButton("Pause");
 				story.startAnimation();
+				//story.frameDuration = 500;
 			}
 		}
 	
 		function updateButton(newClass)
 		{
-			button.classed(newClass,true)
+			button.classed(newClass,true);
 			d3.select("#button text")
 				.transition()
 				.text(newClass);
