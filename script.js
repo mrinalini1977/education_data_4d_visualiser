@@ -10,7 +10,7 @@ function draw(data)
 					"Schools With Drinking Water(%)": "Drinking_Water", "Child(5-16) Cannot Read(%)": "Child_Read_Nothing", "Child(5-16) Highest Read Level - Letter(%)":"Child_Read_Highest_Letter",
 					"Child(5-16) Highest Read Level - Word(%)": "Child_Read_Highest_Letter", "Child(5-16) Highest Read Level - Std 1 Text(%)": "Child_Read_Highest_Std1text", 
 					"Child(5-16) Highest Read Level - Std2 Text(%)": "Child_Read_Highest_Std2text",
-					"Child(5-16) Cannot Identify Numbers(%)": "Child_Math_Nothing", "Child(5-16) Highest Math - Numbers 1-9(%)": "Child_Math_Highest_Number_1to9", 
+					"Child(5-16) Cannot Identify Numbers(%)": "Child_Math_Nothing", "Child(5-16) Highest Math - Numbers 1-9(%)": "Child_Math_Highest_Number1to9", 
 					"Child(5-16) Highest Math - Numbers 11 to 99(%)": "Child_Math_Highest_Number11to99", "Child(5-16) Highest Math - Subtraction(%)" : "Child_Math_Highest_Subtraction",
 					"Child(5-16) Highest Math - Division(%)": "Child_Math_Highest_Division"};
 					
@@ -19,7 +19,7 @@ function draw(data)
 					"Schools With Drinking Water(%)": "Drinking_Water", "Child(5-16) Cannot Read(%)": "Child_Read_Nothing", "Child(5-16) Highest Read Level - Letter(%)":"Child_Read_Highest_Letter",
 					"Child(5-16) Highest Read Level - Word(%)": "Child_Read_Highest_Letter", "Child(5-16) Highest Read Level - Std 1 Text(%)": "Child_Read_Highest_Std1text", 
 					"Child(5-16) Highest Read Level - Std2 Text(%)": "Child_Read_Highest_Std2text",
-					"Child(5-16) Cannot Identify Numbers(%)": "Child_Math_Nothing", "Child(5-16) Highest Math - Numbers 1-9(%)": "Child_Math_Highest_Number_1to9", 
+					"Child(5-16) Cannot Identify Numbers(%)": "Child_Math_Nothing", "Child(5-16) Highest Math - Numbers 1-9(%)": "Child_Math_Highest_Number1to9", 
 					"Child(5-16) Highest Math - Numbers 11 to 99(%)": "Child_Math_Highest_Number11to99", "Child(5-16) Highest Math - Subtraction(%)" : "Child_Math_Highest_Subtraction",
 					"Child(5-16) Highest Math - Division(%)": "Child_Math_Highest_Division"};
 					
@@ -30,7 +30,7 @@ function draw(data)
 						"Child(5-16) Highest Read Level - Letter(%)":"Child_Read_Highest_Letter",
 						"Child(5-16) Highest Read Level - Word(%)": "Child_Read_Highest_Letter", "Child(5-16) Highest Read Level - Std 1 Text(%)": "Child_Read_Highest_Std1text", 
 						"Child(5-16) Highest Read Level - Std2 Text(%)": "Child_Read_Highest_Std2text",
-						"Child(5-16) Cannot Identify Numbers(%)": "Child_Math_Nothing", "Child(5-16) Highest Math - Numbers 1-9(%)": "Child_Math_Highest_Number_1to9", 
+						"Child(5-16) Cannot Identify Numbers(%)": "Child_Math_Nothing", "Child(5-16) Highest Math - Numbers 1-9(%)": "Child_Math_Highest_Number1to9", 
 						"Child(5-16) Highest Math - Numbers 11 to 99(%)": "Child_Math_Highest_Number11to99", "Child(5-16) Highest Math - Subtraction(%)" : "Child_Math_Highest_Subtraction",
 						"Child(5-16) Highest Math - Division(%)": "Child_Math_Highest_Division"};
 					
@@ -115,9 +115,7 @@ function draw(data)
 		
 	    var svg = dimple.newSvg("body",svgWidth, svgHeight);
 		
-		
-	
-					
+				
 		var button = svg.append("g")
 							.attr("id","button")
 							.classed("Pause",true)
@@ -155,11 +153,12 @@ function draw(data)
 		var chart = new dimple.chart(svg, data);
 		
 		chart.setBounds(margin.left, margin.top + buttonHeight * 1.2, svgWidth - margin.left - margin.right - buttonWidth -100,svgHeight - margin.top - margin.bottom - buttonHeight);
-			
+		
 		var xData = data.map(function(d) { return d[xVar] ; } );
 		var yData = data.map(function(d) { return d[yVar] ; } );
 		var sizeData = data.map(function(d) { return d[sizeVar];});
-							 
+			
+									 
 		var xData_l = Math.min.apply(null, xData);
 		var xData_u = Math.max.apply(null, xData);
 	
@@ -179,15 +178,10 @@ function draw(data)
 			x_axis.overrideMin  = 0;
 			x_axis.overrideMax = Math.ceil(xData_u);
 		}
-		else if (xVar === "SCR" || xVar === "PTR")
-		{
-			x_axis.overrideMin  = 0;
-			x_axis.overrideMax = 100;
-		}
 		else
 		{
 			x_axis.overrideMin  = 0;
-			x_axis.overrideMax = 1;
+			x_axis.overrideMax = 100;
 		}
 		
 		
@@ -201,15 +195,10 @@ function draw(data)
 			y_axis.overrideMin = Math.floor(yData_l);
 			y_axis.overrideMax = Math.floor(yData_u);
 		}
-		else if (yVar === "SCR" || yVar === "PTR")
-		{
-			y_axis.overrideMin  = 0;
-			y_axis.overrideMax = 100;
-		}
 		else
 		{
 			y_axis.overrideMin = 0;
-			y_axis.overrideMax = 1;
+			y_axis.overrideMax = 100;
 		}
 		
 		y_axis.ticks = 10;
@@ -222,15 +211,10 @@ function draw(data)
 			size_axis.overrideMin = Math.floor(sizeData_l);
 			size_axis.overrideMax = Math.ceil(sizeData_u);	
 		}
-		else if (sizeVar === "SCR" || sizeVar === "PTR")
-		{
-			size_axis.overrideMin  = 0;
-			size_axis.overrideMax = 100;
-		}
 		else
 		{
 			size_axis.overrideMin = 0;
-			size_axis.overrideMax = 1;	
+			size_axis.overrideMax = 100;	
 		}
 		
 		size_axis.title = dropdown_size.node().options[dropdown_size.node().selectedIndex].value;
@@ -266,15 +250,10 @@ function draw(data)
 				x_axis.overrideMin  = Math.floor(xData_l);
 				x_axis.overrideMax = Math.ceil(xData_u);
 			}
-			else if (value === "SCR" || value === "PTR")
-			{
-				x_axis.overrideMin  = 0;
-				x_axis.overrideMax = 100;
-			}
 			else
 			{
 				x_axis.overrideMin  = 0;
-				x_axis.overrideMax = 1;
+				x_axis.overrideMax = 100;
 			}
 			
 			x_axis.ticks = 15;
@@ -301,15 +280,10 @@ function draw(data)
 				y_axis.overrideMin = Math.floor(yData_l);
 				y_axis.overrideMax = Math.floor(yData_u);
 			}
-			else if (value === "SCR" || value === "PTR")
-			{
-				y_axis.overrideMin  = 0;
-				y_axis.overrideMax = 100;
-			}
 			else
 			{
 				y_axis.overrideMin = 0;
-				y_axis.overrideMax = 1;
+				y_axis.overrideMax = 100;
 			}
 			
 			y_axis.ticks = 15;
@@ -334,15 +308,10 @@ function draw(data)
 				size_axis.overrideMin = Math.floor(sizeData_l);
 				size_axis.overrideMax = Math.ceil(sizeData_u);	
 			}
-			else if (value === "SCR" || value === "PTR")
-			{
-				size_axis.overrideMin  = 0;
-				size_axis.overrideMax = 100;
-			}
 			else 
 			{
 				size_axis.overrideMin = 0;
-				size_axis.overrideMax = 1;	
+				size_axis.overrideMax = 100;	
 			}
 			size_axis.title = this.value;
             		

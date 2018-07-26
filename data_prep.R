@@ -8,6 +8,20 @@ library(jsonlite)
 input_file <- "C:\\work\\4d-time-series-visualiser\\education\\education_data_4d_visualiser\\edu_perf_data.csv"
 input_df <- read.csv(input_file)
 
+noChangeColNames <- c("Year","State","Total_Enrol","PTR" ,"SCR")
+
+for (i in names(input_df))
+{
+   if (!is.element(i, noChangeColNames)  )
+   {
+      input_df[i] <- input_df[i] * 100
+   }
+  else
+  {
+    
+  }
+}
+
 ##rows with NAs
 missing_data <- input_df[!complete.cases(input_df), ]
 
